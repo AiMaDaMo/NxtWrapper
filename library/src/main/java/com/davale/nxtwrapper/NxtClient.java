@@ -114,6 +114,8 @@ public class NxtClient extends Thread implements ClientCallback {
     }
 
 
+    // =============================================================================================
+
     public void connect() {
         if (mIsConnecting) {
             Timber.e("Connection attempt already running.");
@@ -124,10 +126,19 @@ public class NxtClient extends Thread implements ClientCallback {
         start();
     }
 
+
+    // =============================================================================================
+
     public AbsControl getControl() {
         return mControl;
     }
 
+    public String getIpAddress() {
+        return mAddress;
+    }
+
+
+    // =============================================================================================
 
     public interface ConnectionResult {
         void onSuccess();

@@ -149,6 +149,25 @@ public class Nxt extends Thread implements ServerCallback {
 
     // =============================================================================================
 
+    public AbsControl getControl() {
+        if (!mIsConnected) {
+            throw new IllegalStateException("Not connected to NXT");
+        }
+
+        return mControl;
+    }
+
+    public String getNxtName() {
+        return mName;
+    }
+
+    public String getNxtAddress() {
+        return mAddress;
+    }
+
+
+    // =============================================================================================
+
     public void connect() {
         if (mIsConnected) {
             Timber.e("Already connected to %s @ %s", mName, mAddress);
@@ -164,13 +183,6 @@ public class Nxt extends Thread implements ServerCallback {
         mStarted = true;
     }
 
-    public AbsControl getControl() {
-        if (!mIsConnected) {
-            throw new IllegalStateException("Not connected to NXT");
-        }
-
-        return mControl;
-    }
 
     public boolean isConnected() {
         return mIsConnected;
