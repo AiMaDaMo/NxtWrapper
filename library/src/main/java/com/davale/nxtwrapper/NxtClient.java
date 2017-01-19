@@ -89,7 +89,7 @@ public class NxtClient extends Thread implements ClientCallback {
             Timber.e(e, "Could not connect to server.");
             mIsConnecting = false;
 
-            mListener.onFailure(e.getMessage());
+            mListener.onFailure(this, e.getMessage());
         }
     }
 
@@ -100,7 +100,7 @@ public class NxtClient extends Thread implements ClientCallback {
 
     @Override
     public void onConnected(ChannelHandlerContext ctx) {
-        mListener.onSuccess();
+        mListener.onSuccess(this);
     }
 
     @Override
@@ -141,9 +141,9 @@ public class NxtClient extends Thread implements ClientCallback {
     // =============================================================================================
 
     public interface ConnectionResult {
-        void onSuccess();
+        void onSuccess(NxtClient nxt);
 
-        void onFailure(String message);
+        void onFailure(NxtClient nxt, String message);
     }
 
     public static class Builder {

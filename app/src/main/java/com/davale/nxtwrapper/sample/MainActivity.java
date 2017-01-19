@@ -48,12 +48,12 @@ public class MainActivity extends Activity implements Nxt.ConnectionResult, NxtC
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(NxtClient nxt) {
         Timber.e("Successfully connected to server!");
     }
 
     @Override
-    public void onFailure(String message) {
+    public void onFailure(NxtClient nxt, String message) {
         Timber.e("Could not connect to server: %s", message);
     }
 }
