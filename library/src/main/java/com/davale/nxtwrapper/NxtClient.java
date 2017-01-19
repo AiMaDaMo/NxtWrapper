@@ -18,6 +18,10 @@ import com.davale.nxtwrapper.network.callback.ClientCallback;
 import com.davale.nxtwrapper.network.callback.ServerCallback;
 import com.davale.nxtwrapper.util.Preconditions;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.NoSuchElementException;
+
 import io.netty.channel.ChannelHandlerContext;
 import lejos.pc.comm.NXTInfo;
 import timber.log.Timber;
@@ -25,6 +29,9 @@ import timber.log.Timber;
 import static android.content.Context.WIFI_SERVICE;
 
 public class NxtClient extends Thread implements ClientCallback {
+
+    private static Map<String, NxtClient> CONNECTIONS = new HashMap<>();
+
 
     // Builder fields
 
@@ -61,6 +68,16 @@ public class NxtClient extends Thread implements ClientCallback {
 
         communicator = new NettyCommunicator(mClient);
         mControl = new DriveControl(communicator);
+
+        CONNECTIONS.put(builder.address, this);
+    }
+
+    public static NxtClient getConnection(String key) {
+        if (CONNECTIONS.containsKey(key)) {
+            return CONNECTIONS.get(key);
+        }
+
+        throw new NoSuchElementException("Unable to find connection '" + key + "'");
     }
 
 
