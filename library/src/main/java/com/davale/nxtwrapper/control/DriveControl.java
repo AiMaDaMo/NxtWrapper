@@ -1,10 +1,14 @@
 package com.davale.nxtwrapper.control;
 
+import android.support.annotation.Nullable;
+
 import com.davale.nxtwrapper.communicator.Communicator;
 
 public class DriveControl extends AbsControl {
 
-	public DriveControl(Communicator communicator) {
+	public DriveControl(@Nullable ControlCallback callback, Communicator communicator) {
+		super(callback);
+
 		this.communicator = communicator;
 	}
 

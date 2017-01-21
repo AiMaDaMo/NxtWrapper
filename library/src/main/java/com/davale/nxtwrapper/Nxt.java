@@ -4,11 +4,13 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.Formatter;
 import android.widget.Toast;
 
 import com.davale.nxtwrapper.communicator.BluetoothCommunicator;
 import com.davale.nxtwrapper.control.AbsControl;
+import com.davale.nxtwrapper.control.ControlCallback;
 import com.davale.nxtwrapper.control.DriveControl;
 import com.davale.nxtwrapper.network.NettyServer;
 import com.davale.nxtwrapper.network.ServerWorker;
@@ -49,6 +51,9 @@ public class Nxt extends Thread implements ServerCallback {
     @NonNull
     private AbsControl mControl;
 
+    @Nullable
+    private ControlCallback mControlCallback;
+
     private boolean mUseNetwork;
 
 
@@ -78,8 +83,10 @@ public class Nxt extends Thread implements ServerCallback {
 
         mUseNetwork = builder.useNetwork;
 
+        mControlCallback = builder.controlCallback;
+
         communicator = new BluetoothCommunicator();
-        mControl = new DriveControl(communicator);
+        mControl = new DriveControl(mControlCallback, communicator);
 
         CONNECTIONS.put(builder.name, this);
     }
@@ -206,7 +213,7 @@ public class Nxt extends Thread implements ServerCallback {
 
         ConnectionResult listener;
 
-        AbsControl control;
+        ControlCallback controlCallback;
 
         boolean useNetwork;
 
@@ -236,6 +243,11 @@ public class Nxt extends Thread implements ServerCallback {
 
         public Builder useNetwork(boolean useNetwork) {
             this.useNetwork = useNetwork;
+            return this;
+        }
+
+        public Builder controlCallback(ControlCallback callback) {
+            controlCallback = callback;
             return this;
         }
 

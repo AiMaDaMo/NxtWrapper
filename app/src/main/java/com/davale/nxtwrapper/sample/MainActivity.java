@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.davale.nxtwrapper.Nxt;
 import com.davale.nxtwrapper.NxtClient;
+import com.davale.nxtwrapper.control.ControlCallback;
 
 import timber.log.Timber;
 
@@ -23,6 +24,12 @@ public class MainActivity extends Activity implements Nxt.ConnectionResult, NxtC
                 .name("NXT1")
                 .listener(this)
                 .useNetwork(true)
+                .controlCallback(new ControlCallback() {
+                    @Override
+                    public void drive(int thrust, int steering) {
+                        Timber.e("Command: %s, %s", thrust, steering);
+                    }
+                })
                 .build();
 
         nxt.connect();

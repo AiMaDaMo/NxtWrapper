@@ -1,5 +1,7 @@
 package com.davale.nxtwrapper.control;
 
+import android.support.annotation.Nullable;
+
 import com.davale.nxtwrapper.communicator.Communicator;
 
 import timber.log.Timber;
@@ -15,7 +17,18 @@ public abstract class AbsControl {
 
 	Communicator communicator;
 
-	void sendMotorData() {
+    @Nullable
+    ControlCallback mCallback;
+
+    public AbsControl(@Nullable ControlCallback callback) {
+        mCallback = callback;
+    }
+
+    void sendMotorData() {
+        if (mCallback != null) {
+            mCallback.drive(thrust * mode, steering * mode);
+        }
+
         String toSend = toString();
         communicator.sendData(toSend);
 	}

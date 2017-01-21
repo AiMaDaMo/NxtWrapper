@@ -4,12 +4,14 @@ import android.content.Context;
 import android.net.wifi.WifiManager;
 import android.os.Looper;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.format.Formatter;
 import android.widget.Toast;
 
 import com.davale.nxtwrapper.communicator.BluetoothCommunicator;
 import com.davale.nxtwrapper.communicator.NettyCommunicator;
 import com.davale.nxtwrapper.control.AbsControl;
+import com.davale.nxtwrapper.control.ControlCallback;
 import com.davale.nxtwrapper.control.DriveControl;
 import com.davale.nxtwrapper.network.NettyClient;
 import com.davale.nxtwrapper.network.NettyServer;
@@ -67,7 +69,7 @@ public class NxtClient extends Thread implements ClientCallback {
         mClient = new NettyClient(mAddress);
 
         communicator = new NettyCommunicator(mClient);
-        mControl = new DriveControl(communicator);
+        mControl = new DriveControl(null, communicator);
 
         CONNECTIONS.put(builder.address, this);
     }
@@ -153,8 +155,6 @@ public class NxtClient extends Thread implements ClientCallback {
         String address;
 
         ConnectionResult listener;
-
-        AbsControl control;
 
         boolean useNetwork;
 
