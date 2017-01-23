@@ -77,6 +77,8 @@ public class Nxt extends Thread implements ServerCallback {
         Preconditions.checkNotNull(builder.address, "A non-null address must be provided.");
         Preconditions.checkNotNull(builder.listener, "A non-null listener must be provided.");
 
+        mContext = builder.context;
+
         mName = builder.name;
         mAddress = builder.address;
         mListener = builder.listener;

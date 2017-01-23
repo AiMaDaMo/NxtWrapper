@@ -63,6 +63,8 @@ public class NxtClient extends Thread implements ClientCallback {
         Preconditions.checkNotNull(builder.address, "A non-null address must be provided.");
         Preconditions.checkNotNull(builder.listener, "A non-null listener must be provided.");
 
+        mContext = builder.context;
+
         mAddress = builder.address;
         mListener = builder.listener;
 
